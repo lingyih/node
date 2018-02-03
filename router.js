@@ -15,10 +15,10 @@ const router = express.Router();
 router.get('/',indexController.index);
 
 // // 登录页路由
-// router.get('/login',userController.login);
+router.get('/login',userController.login);
 //
 // //注册页展示路由
-// router.get('/sign',userController.sign);
+router.get('/sign',userController.sign);
 //
 // // 注册路由
 // router.post('/sign',userController.signadd);
