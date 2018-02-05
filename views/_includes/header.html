@@ -36,21 +36,24 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        {{ if use }}
         <a class="btn btn-default navbar-btn" href="/topics/new">发起</a>
-        <a class="btn btn-primary navbar-btn" href="/login">登录</a>
-        <a class="btn btn-success navbar-btn" href="/sign">注册</a>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img width="20" height="20" src="../public/img/avatar-max-img.png" alt=""> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="dropdown-current-user">
-              当前登录用户: xxx
+              当前登录用户: <span>{{ use.nickname }}</span>
             </li>
             <li role="separator" class="divider"></li>
             <li><a href="#">个人主页</a></li>
             <li><a href="/settings/profile">设置</a></li>
-            <li><a href="#">提出</a></li>
+            <li><a href="/signout">退出</a></li>
           </ul>
         </li>
+        {{ else }}
+        <a class="btn btn-primary navbar-btn" href="/login">登录</a>
+        <a class="btn btn-success navbar-btn" href="/sign">注册</a>
+        {{ /if }}
       </ul>
     </div>
     <!-- /.navbar-collapse -->

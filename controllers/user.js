@@ -67,6 +67,9 @@ exports.signadd=function (req,res) {
                 error: err.message
             })
         }
+        //添加session
+                req.session.use=data
+
         return res.status(200).json({
             code: 0,
         })
@@ -87,24 +90,34 @@ exports.signadd=function (req,res) {
      const body = req.body;
      //判断提交邮箱
      userModel.email(body.email,(err,data) => {
+         //接收用户提交过来的密码
       let pass= body.password
+         //接收数据库返回的密码
       let word = data.password
+         let date=data
+
          if(err){
              return res.status(500).json({
                  error: err.message
              })
          }
-         if(data=undefined){
+         //判断有没有这个数据
+         if(data==undefined){
             return  res.status(200).json({
                  code:1,
              })
          }
+         //判断密码是否正确
          if(md5(pass)!=word){
             return  res.status(200).json({
                  code:2
              })
          }
-         //进行跳转
+         //存session
+     req.session.use=date
+
+     
+     //进行跳转
         return res.status(200).json({
          code: 0,
      })
