@@ -19,12 +19,12 @@ router.get('/login',userController.login);
 //
 // //注册页展示路由
 router.get('/sign',userController.sign);
-//
-// // 注册路由
-// router.post('/sign',userController.signadd);
-//
-// // 登陆
-// router.post('/login',userController.loginadd);
+
+// 注册路由
+router.post('/sign',userController.signadd);
+
+// 登陆
+router.post('/login',userController.loginadd);
 
 
 //导出路由

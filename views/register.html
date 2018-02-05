@@ -19,17 +19,17 @@
     <form id="register_form">
       <div class="form-group">
         <label for="email">邮箱</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" autofocus required >
       </div>
       <div class="form-group">
         <label for="nickname">昵称</label>
-        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname">
+        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required minlength="2" maxlength="10">
       </div>
       <div class="form-group">
         <label for="password">密码</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="6" maxlength="20">
       </div>
-      <button type="button" class="btn btn-success btn-block">注册</button>
+      <button type="submit" class="btn btn-success btn-block">注册</button>
     </form>
     <div class="message">
       <p>已有账号? <a href="/login">点击登录</a>.</p>
@@ -37,6 +37,44 @@
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script>
+    //注册表单提交事件
+    var btn  =  $('#register_form');
+    btn.submit(function (e) {
+        //组织表单提交
+       e.preventDefault();
+        handleSignin();
+    });
+
+
+    function handleSignin() {
+        //获取表单提交数据
+        var formData = btn.serialize();
+//        console.log(formData);
+        $.ajax({
+            url:'/sign',
+            method:'post',
+            data:formData,
+            dataType:'json',
+            success:function (data) {
+              switch (data.code){
+                  case 0:
+                      window.location.href = '/'
+                      break
+                  case 1:
+                      window.alert('邮箱已存在')
+                      break
+                  case 2:
+                      window.alert('昵称已存在')
+                      break
+              }
+            },
+            error:function (err) {
+                window.alert('请求失败');
+                console.log(err);
+            }
+
+        });
+    }
   </script>
 </body>
 
