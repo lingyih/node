@@ -15,10 +15,9 @@
         <div class="form-group">
           <label for="exampleInputEmail1">选择板块</label>
           <select class="form-control">
-            <option>分享</option>
-            <option>问答</option>
-            <option>招聘</option>
-            <option>客户端测试</option>
+            {{each data}}
+            <option value="{{$value.id}}">{{$value.name}}</option>
+            {{/each}}
           </select>
         </div>
         <div class="form-group">

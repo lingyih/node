@@ -8,7 +8,9 @@ const router = express.Router();
 //创建路由
 
 //首页路由
-router.get('/xie',topicController.xie);
+router.get('/create',topicController.create);
+
+router.post('/create',topicController.createshu);
 
 
 

@@ -31,10 +31,24 @@ app.use(session({
     saveUninitialized: true // 无论你是否使用 Session ，我都默认直接给你分配一把钥匙
 }))
 
+//吧对饮的session值传递给诗书
+app.use(function (req,res,next) {
+    app.locals.use=req.session.use;
+    next();
+});
+
 // 引入路由挂载
 app.use(indexRouter);
 app.use(userRouter);
 app.use('/topic',topicRouter);
+
+//错误处理中间建
+app.use(function (err, req, res, next) {
+    res.status(500).send({
+        error: err.message
+    })
+})
+
 
 // 监听3000端口
 app.listen(3000,() => console.log('监听3000端口') );

@@ -20,9 +20,7 @@ exports.signadd=function (req,res) {
     userModel.email(email,(err,data) => {
 
             if (err) {
-                return res.status(500).json({
-                    error: err.message // err 错误对象有一个 message 属性是具体的错误消息
-                })
+                return next(err);
             }
 
 
@@ -43,9 +41,7 @@ exports.signadd=function (req,res) {
         // 调用方法判断数据是否被注册
         userModel.nickname(user,(err,data)=>{
             if(err){
-                return res.status(500).json({
-                    error: err.message
-                })
+                return next(err);
             }
 
 
@@ -63,9 +59,7 @@ exports.signadd=function (req,res) {
         body.password=md5(body.password);
             userModel.save(body,(err,data)=>{
         if(err){
-            return res.status(500).json({
-                error: err.message
-            })
+            return next(err);
         }
         //添加session
                 req.session.use=data
@@ -97,9 +91,7 @@ exports.signadd=function (req,res) {
          let date=data
 
          if(err){
-             return res.status(500).json({
-                 error: err.message
-             })
+             return next(err);
          }
          //判断有没有这个数据
          if(data==undefined){
