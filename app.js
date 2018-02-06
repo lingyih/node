@@ -5,7 +5,9 @@ const  app =express();
 //引入session
 const session = require('express-session')
 //引入路由模块
-const  router = require('./router');
+const indexRouter = require('./route/index')
+const userRouter = require('./route/user')
+const topicRouter = require('./route/topic')
 
 //引入请求接收参数模块
 var bodyParser = require('body-parser')
@@ -30,7 +32,9 @@ app.use(session({
 }))
 
 // 引入路由挂载
-app.use(router);
+app.use(indexRouter);
+app.use(userRouter);
+app.use('/topic',topicRouter);
 
 // 监听3000端口
 app.listen(3000,() => console.log('监听3000端口') );

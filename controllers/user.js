@@ -116,10 +116,19 @@ exports.signadd=function (req,res) {
          //存session
      req.session.use=date
 
-     
+    const ss= req.session.use;
+    
      //进行跳转
         return res.status(200).json({
          code: 0,
      })
      })
  }
+
+ //退出
+exports.signout=function (req,res) {
+    //清除session
+    delete req.session.use;
+    // 重定向
+    res.redirect('/login');
+}

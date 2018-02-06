@@ -25,7 +25,7 @@ exports.nickname=function (nickname,callback) {
 }
 
 exports.save=function (user,callback) {
-    user.createdAt = null;
+    user.createdAt = "2018-2-5 23:02:58";
     const sql= "INSERT INTO `users` SET ?"
     query(sql,user,function (err,results) {
         if (err){
