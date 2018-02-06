@@ -12,7 +12,7 @@ exports.sign= function (req,res) {
     res.render('./register.html')
 }
 //注册项
-exports.signadd=function (req,res) {
+exports.signadd=function (req,res,next) {
     // 接收数据
     const body=req.body;
     const email = body.email;
@@ -79,7 +79,7 @@ exports.signadd=function (req,res) {
 
 
 //登录页
- exports.loginadd=function (req,res) {
+ exports.loginadd=function (req,res,next) {
      //获取提交至
      const body = req.body;
      //判断提交邮箱
