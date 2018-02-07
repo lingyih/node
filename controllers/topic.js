@@ -35,3 +35,20 @@ exports.createshu=function (req,res,next) {
 
     });
 }
+
+//文章展示
+exports.show=function (req,res,next) {
+    //获取提交 值
+    const body = req.params;
+    const topicId = body.topicId;
+    //获取数据
+    topicModel.showdate(topicId,function (err,topic) {
+        if(err){
+            return next(err);
+        }
+
+        //展示视图
+    res.render('./topic/show.html',{topic});
+    })
+    
+}

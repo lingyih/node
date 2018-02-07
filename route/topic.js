@@ -10,8 +10,11 @@ const router = express.Router();
 //首页路由
 router.get('/create',topicController.create);
 
+//文章提缴
 router.post('/create',topicController.createshu);
 
+//文章展示
+router.get('/:topicId',topicController.show);
 
 
 

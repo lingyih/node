@@ -28,3 +28,15 @@ exports.createti=function (data,callback) {
         callback(null,re);
     });
 }
+
+//查询帖子数据
+exports.showdate=function (data,callback) {
+    //查询语句
+    const sql = 'SELECT * FROM `topics`  WHERE id=?';
+    query(sql,data,function (err,data) {
+        if(err){
+            return callback(err);
+        }
+        callback(null,data[0]);
+    })
+}
