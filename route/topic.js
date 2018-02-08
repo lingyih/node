@@ -3,6 +3,9 @@ const express = require('express');
 //引入控制器
 const topicController = require('../controllers/topic');
 
+//引入用户判断中间建
+const topicMiddlewares =require('../middlewares/topic');
+
 const router = express.Router();
 
 //创建路由
@@ -16,7 +19,8 @@ router.post('/create',topicController.createshu);
 //文章展示
 router.get('/:topicId',topicController.show);
 
-
+//删除文章
+router.post('/:topicId/edit',topicMiddlewares.checkEditAndRemove,topicController.edit);
 
 
 

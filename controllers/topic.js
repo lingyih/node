@@ -52,3 +52,22 @@ exports.show=function (req,res,next) {
     })
     
 }
+
+exports.edit= function (req,res,next) {
+    //获取要删除的id
+    const id = req.params.topicId;
+    console.log(id);
+    //进行删除
+    topicModel.edit(id,function (err,data) {
+        if(err){
+             console.log('ss');
+            return next(err);
+           
+        }
+
+        return res.status(200).json({
+            code: 0,
+            message: 'success'
+        })
+    })
+}
