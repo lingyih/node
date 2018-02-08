@@ -4,39 +4,94 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+<style>
+  .main {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+</style>
 </head>
 
 <body>
   {{include '../_includes/header.html'}}
   <section class="container">
   <div class="row">
-    <div class="col-md-5">
-      <form>
+    <div class="col-md-8 main">
+      {{ if !topic }}
+      <div class="alert alert-danger" role="alert">此话题不存在或已被删除。</div>
+      {{ else }}
+      {{ if topic.userId !== use.id }}
+      <div class="alert alert-danger" role="alert">您没有编辑该话题的权限！</div>
+      {{ else }}
+      <form id="form" action="/topic/{{ topic.id }}/edit" method="post">
         <div class="form-group">
-          <label for="exampleInputEmail1">选择板块</label>
-          <select class="form-control">
-            <option>分享</option>
-            <option>问答</option>
-            <option>招聘</option>
-            <option>客户端测试</option>
+          <label for="category">选择板块</label>
+          <select class="form-control" name="categoryId" id="category">
+            {{ each topicCategories }}
+            {{ if topic.categoryId === $value.id }}
+            <option value="{{ $value.id }}" selected>{{ $value.name }}</option>
+            {{ else }}
+            <option value="{{ $value.id }}">{{ $value.name }}</option>
+            {{ /if }}
+            {{ /each }}
           </select>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1">标题</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+          <label for="title">标题</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Email" value="{{ topic.title }}">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">内容</label>
-          <textarea class="form-control" rows="3"></textarea>
+          <label for="content">内容</label>
+          <textarea class="form-control" rows="5" id="content" name="content">{{ topic.content }}</textarea>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">发布</button>
       </form>
+      {{ /if }}
+      {{ /if }}
     </div>
   </div>
 </section>
   {{include '../_includes/footer.html'}}
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- 
+    npm install jquery-form
+    参考文档：https://github.com/jquery-form/form
+   -->
+  <script src="/node_modules/jquery-form/dist/jquery.form.min.js"></script>
+  <script>
+    // markdown 编辑器初始化
+    // 这个配置必须在前面，否则提交获取不到富文本编辑器内容
+    var editor = new Editor()
+    editor.render()
+
+    var $form = $('#form')
+
+    // 服务器重定向对异步请求无效
+    // 反之只有同步请求，服务器重定向才有效
+    $form.on('submit', function (e) {
+      e.preventDefault()
+      $form.ajaxSubmit(function (data) {
+        var code = data.code
+        switch(code) {
+          case 0:
+            window.location.href = data.data.redirect
+            break
+          case 1:
+            window.alert('该资源不存在或已删除')
+            break
+          case 2:
+            window.alert('对不起，您没有操作权限！')
+            break
+        }
+      })
+    })
+  </script>
 </body>
 
 </html>

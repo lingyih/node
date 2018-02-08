@@ -4,13 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+  <style>
+    .main {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  </style>
 </head>
 
 <body>
   {{include '../_includes/header.html'}}
   <section class="container">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-8 main">
       <form id='btn' action="/topic/create" method="post">
         <div class="form-group" >
           <label for="exampleInputEmail1">选择板块</label>
@@ -25,8 +36,8 @@
           <input type="text" name='title' class="form-control" id="exampleInputEmail1" >
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">内容</label>
-          <textarea class="form-control" name='content' rows="3"></textarea>
+          <label for="content">内容</label>
+          <textarea class="form-control" rows="5" id="content" name="content"></textarea>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -40,6 +51,11 @@
 
 </body>
   <script>
+     // markdown 编辑器初始化
+      // 这个配置必须在前面，否则提交获取不到富文本编辑器内容
+      var editor = new Editor()
+      editor.render()
+
     //获取表单
     var btn = $('#btn');
     ////阻止表单提交事件

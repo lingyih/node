@@ -20,9 +20,13 @@ router.post('/create',topicController.createshu);
 router.get('/:topicId',topicController.show);
 
 //删除文章
-router.post('/:topicId/edit',topicMiddlewares.checkEditAndRemove,topicController.edit);
+router.post('/:topicId/delete',topicMiddlewares.checkEditAndRemove,topicController.delete);
+
+//文章编辑
+router.get('/:topicId/edit',topicMiddlewares.checkEditAndRemove,topicController.editshow);
 
 
-
+//文章编辑提交
+router.post('/:topicId/edit',topicMiddlewares.checkEditAndRemove,topicController.edit)
 //导出路由
 module.exports=router;

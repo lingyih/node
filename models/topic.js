@@ -44,7 +44,7 @@ exports.showdate=function (data,callback) {
 
 
 //用户删除
-exports.edit=function (data,callback) {
+exports.delete=function (data,callback) {
     //构建删除sql
     const sql = 'DELETE FROM `topics` WHERE `id`=?';
     query(sql,[data],function (err,data) {
@@ -53,4 +53,10 @@ exports.edit=function (data,callback) {
         }
         callback(null,err);
     })
+}
+
+
+exports.findByIdAndUpdate = (id, topic, callback) => {
+    const sqlStr = 'UPDATE `topics` SET `title`=?, `content`=?, `categoryId`=? WHERE `id`=?'
+    query(sqlStr, [topic.title, topic.content, topic.categoryId, id], callback)
 }
